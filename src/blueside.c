@@ -61,7 +61,6 @@ void blueside(void)
 						break;
 					}
 					if(current_position == 1){
-						odometry_stop(HARD_STOP);
 						while(1);
 					}
 				}//end for
@@ -77,7 +76,6 @@ void blueside(void)
 						break;
 					}
 					if(current_position == 1){
-						odometry_stop(HARD_STOP);
 						while(1);
 					}
 				}//end for

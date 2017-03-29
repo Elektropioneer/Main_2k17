@@ -47,16 +47,15 @@ void timer_init(unsigned int freq)
 
 /*
  *	Function: 		ISR(TIMER1_COMPA_vect)
- *	Parameters: 	x
  *	Description: 	ISR interrupt for timer
  */
 ISR(TIMER1_COMPA_vect)
 {
     if(timer_callback != NULL)
         timer_callback();
-	if(sys_time >= 90000)			// if match end
+	if(sys_time >= 90000)					// if match end
 	{
-		if(system_get_match_started())
+		if(system_get_match_started())		// if the match has started before
 		{
 			odometry_stop(HARD_STOP);
 			while(1);
@@ -143,6 +142,11 @@ uint8_t return_active_state(void)
 	return active_state;
 }
 
+void leds(unsigned char state)
+{
+	if(state) { PORTG = 0xff; } else { PORTG = 0x00; }
+}
+
 /*
  *	Function: 		void system_init(void)
  *	Parameters: 	void
@@ -162,6 +166,13 @@ void system_init(void)
 	 */
 	gpio_register_pin(JUMPER_PIN,GPIO_DIRECTION_INPUT,TRUE);							//jumper
 	gpio_register_pin(SIDE_PIN,GPIO_DIRECTION_INPUT,TRUE);								//prekidac za stranu
+	gpio_register_pin(TACTIC_PIN,GPIO_DIRECTION_INPUT,TRUE);							//prekidac za stranu
+
+	//test for true or nah
+	gpio_register_pin(RELAY_1_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
+	gpio_register_pin(RELAY_2_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
+	gpio_register_pin(RELAY_3_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
+	gpio_register_pin(RELAY_4_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
 
 	/*
 	gpio_register_pin(SENSOR_F_L_PIN,GPIO_DIRECTION_INPUT,TRUE);						//sensor front left
@@ -172,21 +183,21 @@ void system_init(void)
 
 	// led debugs
 	DDRG = 0xff;
-	PORTG = 0x00;
+	leds(ON);
 
 	// inits
 	servo_init(50);
 	timer_init(1000);
 	CAN_Init(1);
-	initUart1(UART1_BAUD,UART_ISR_OFF);
+	initUart1(UART1_BAUD,UART_ISR_ON);
 	actuator_setup();
 	
 	// waiting for the jumper
 	while(!(gpio_read_pin(JUMPER_PIN)));
 		_delay_ms(10);
 		
-	// indicating the led's
-	PORTG = 0xff;
+	// indicating the led
+	leds(OFF);
 	
 	system_reset_system_time();															// reset system time
 	system_set_match_started();															// match has started!
@@ -199,6 +210,7 @@ void system_init(void)
  *	Parameters: 	signed char robot_side, signed char sensor_side
  *	Description:	checking all the sensors
  */
+/*
 signed char check_sensor(signed char robot_side, signed char sensor_side)
 {
 	if(robot_side == ROBOT_SIDE_FRONT)
@@ -258,4 +270,4 @@ signed char check_sensor(signed char robot_side, signed char sensor_side)
 		}
 	}
 	return NOT_DETECTED;
-}
+}*/

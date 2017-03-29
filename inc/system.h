@@ -26,15 +26,29 @@
 #define TRUE					0
 #define FALSE					1
 
+#define ON						1
+#define OFF						0
+
 #define JUMPER_PIN				40		//portf 0
 #define SIDE_PIN				41		//portf 1
 #define TACTIC_PIN				42		//portf 2
+
+
+#define RELAY_1_PIN				3		//porta3
+#define RELAY_2_PIN				2		//porta2
+#define RELAY_3_PIN				1		//porta1
+#define RELAY_4_PIN				0		//porta0
+
+#define MOTOR_PIN				0
+#define KLIP_PIN				0
 
 #define SENSOR_F_L_PIN			8		//portb 0	
 #define SENSOR_F_R_PIN			10		//portb 2 
 #define SENSOR_B_L_PIN			12		//portb 4
 #define SENSOR_B_R_PIN			14		//portb 6
 
+#define DIST_TRIG_PIN			0
+#define DIST_ECHO_PIN			0
 //Function to enable the timer with argument of the frequency
 void timer_init(unsigned int freq);
 
@@ -63,5 +77,7 @@ void system_set_match_started(void);
 uint8_t system_get_match_started(void);
 
 uint32_t system_get_system_time(void);
+
+void leds(unsigned char state);
 
 #endif

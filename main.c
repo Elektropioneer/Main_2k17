@@ -7,8 +7,24 @@
 #include "sides.h"
 #include "actuators.h"
 
+/*
+	 _______
+	< vader >
+	 -------
+			\    ,-^-.
+			 \   !oYo!
+			  \ /./=\.\______
+				   ##        )\/\
+					||-----w||
+					||      ||
+
+*/
 int main()
 {
 	system_init();
 	_delay_ms(100);
+
+
+	yellowside();
+
 }

@@ -219,7 +219,7 @@ char CAN_Write(unsigned char *data, unsigned char receivingNodeAddress)
 	unsigned char ch;
 	unsigned char tempPage = CANPAGE;
 
-	// trazim slobodan MOb
+	// trazim slobodan MOb jel ovo sranje mene zajebava ili? sta ti treba? find all
 	for(ch = 0; ch < 15; ch++)
 	{
 		CANPAGE = ch << 4;

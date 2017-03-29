@@ -23,7 +23,8 @@
 // SIDE TACTIC
 const struct goto_fields yellow_tactic_side_positions[TACTIC_SIDE_POSITION_COUNT] =
 {
-	{{100,0},LOW_SPEED,FORWARD,NULL}
+	{{400,0},LOW_SPEED,FORWARD,NULL}
+
 };
 
 // CENTER TACTIC
@@ -36,14 +37,14 @@ const struct goto_fields yellow_tactic_center_positions[TACTIC_CENTER_POSITION_C
 void yellowside(void)
 {
 	struct odometry_position starting_position;
-	uint8_t current_position = 0;
-	uint8_t next_position = 0;
+	uint8_t current_position 	= 0;
+	uint8_t next_position 		= 0;
 	uint8_t odometry_status;
-	int8_t active_state = ROBOT_STATE_TACTIC_SIDE;
+	int8_t active_state 		= ROBOT_STATE_TACTIC_SIDE;
 
-	starting_position.x		= 0;
-	starting_position.y		= 0;
-	starting_position.angle = 0;
+	starting_position.x			= 0;
+	starting_position.y			= 0;
+	starting_position.angle 	= 0;
 
 	odometry_set_position(&starting_position);
 
@@ -61,8 +62,7 @@ void yellowside(void)
 					{
 						break;
 					}
-					if(current_position == 1){
-						odometry_stop(HARD_STOP);
+					if(current_position == TACTIC_SIDE_POSITION_COUNT - 1){		// when at the last position
 						while(1);
 					}
 				}//end for
@@ -77,9 +77,8 @@ void yellowside(void)
 					{
 						break;
 					}
-					if(current_position == 1){
-						odometry_stop(HARD_STOP);
-						while(1);
+					if(current_position == TACTIC_CENTER_POSITION_COUNT){	// when at the last position
+
 					}
 				}//end for
 		}//end switch
