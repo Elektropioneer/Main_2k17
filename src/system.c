@@ -142,6 +142,11 @@ uint8_t return_active_state(void)
 	return active_state;
 }
 
+/*
+ *	Function: 		void leds(unsigned char state)
+ *	Parameters: 	unsigned char state - the state
+ *	Description:	setting the debug led's states
+ */
 void leds(unsigned char state)
 {
 	if(state) { PORTG = 0xff; } else { PORTG = 0x00; }
@@ -167,13 +172,7 @@ void system_init(void)
 	gpio_register_pin(JUMPER_PIN,GPIO_DIRECTION_INPUT,TRUE);							//jumper
 	gpio_register_pin(SIDE_PIN,GPIO_DIRECTION_INPUT,TRUE);								//prekidac za stranu
 	gpio_register_pin(TACTIC_PIN,GPIO_DIRECTION_INPUT,TRUE);							//prekidac za stranu
-
-	//test for true or nah
-	gpio_register_pin(RELAY_1_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
-	gpio_register_pin(RELAY_2_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
-	gpio_register_pin(RELAY_3_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
-	gpio_register_pin(RELAY_4_PIN,GPIO_DIRECTION_OUTPUT,TRUE);
-
+	gpio_register_pin(VALJAK_PIN,GPIO_DIRECTION_INPUT,TRUE);							//prekidac za valjak
 	/*
 	gpio_register_pin(SENSOR_F_L_PIN,GPIO_DIRECTION_INPUT,TRUE);						//sensor front left
 	gpio_register_pin(SENSOR_F_R_PIN,GPIO_DIRECTION_INPUT,TRUE);						//sensor front right
@@ -183,6 +182,7 @@ void system_init(void)
 
 	// led debugs
 	DDRG = 0xff;
+	DDRA = 0xff;
 	leds(ON);
 
 	// inits
@@ -191,10 +191,10 @@ void system_init(void)
 	CAN_Init(1);
 	initUart1(UART1_BAUD,UART_ISR_ON);
 	actuator_setup();
-	
+
 	// waiting for the jumper
-	while(!(gpio_read_pin(JUMPER_PIN)));
-		_delay_ms(10);
+	/*while(!(gpio_read_pin(JUMPER_PIN)));
+		_delay_ms(10);*/
 		
 	// indicating the led
 	leds(OFF);
@@ -202,7 +202,6 @@ void system_init(void)
 	system_reset_system_time();															// reset system time
 	system_set_match_started();															// match has started!
 
-	
 }
 
 /*
@@ -210,7 +209,6 @@ void system_init(void)
  *	Parameters: 	signed char robot_side, signed char sensor_side
  *	Description:	checking all the sensors
  */
-/*
 signed char check_sensor(signed char robot_side, signed char sensor_side)
 {
 	if(robot_side == ROBOT_SIDE_FRONT)
@@ -270,4 +268,4 @@ signed char check_sensor(signed char robot_side, signed char sensor_side)
 		}
 	}
 	return NOT_DETECTED;
-}*/
+}

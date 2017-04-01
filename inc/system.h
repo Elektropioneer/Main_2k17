@@ -32,15 +32,7 @@
 #define JUMPER_PIN				40		//portf 0
 #define SIDE_PIN				41		//portf 1
 #define TACTIC_PIN				42		//portf 2
-
-
-#define RELAY_1_PIN				3		//porta3
-#define RELAY_2_PIN				2		//porta2
-#define RELAY_3_PIN				1		//porta1
-#define RELAY_4_PIN				0		//porta0
-
-#define MOTOR_PIN				0
-#define KLIP_PIN				0
+#define VALJAK_PIN				43		//portf 3
 
 #define SENSOR_F_L_PIN			8		//portb 0	
 #define SENSOR_F_R_PIN			10		//portb 2 

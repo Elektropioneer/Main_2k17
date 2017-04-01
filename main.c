@@ -21,10 +21,11 @@
 */
 int main()
 {
+
 	system_init();
 	_delay_ms(100);
 
+	//yellowside();
 
-	yellowside();
 
 }

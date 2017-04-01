@@ -53,6 +53,7 @@ uint8_t     odometry_rotate_for(uint16_t angle,uint8_t speed, uint8_t (*callback
 uint8_t     odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(uint32_t start_time));
 uint8_t     odometry_get_status(void);
 void        odometry_stop(int8_t type);
+uint8_t 	odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t direction, uint8_t (*callback)(uint32_t start_time));
 
 int16_t     odometry_get_x(void);
 int16_t     odometry_get_y(void);

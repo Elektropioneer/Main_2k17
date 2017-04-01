@@ -161,6 +161,27 @@ uint8_t odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(ui
 	return odometry_wait_until_done(callback);
 }
 
+uint8_t odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t direction, uint8_t (*callback)(uint32_t start_time))
+{
+	uint8_t buffer[8];
+
+	// this is not sure
+	odometry_set_speed(70);
+
+	buffer[0] = 'Q';
+	buffer[1] = x_pos >> 8;
+	buffer[2] = x_pos & 0xFF;
+	buffer[3] = y_pos >> 8;
+	buffer[4] = y_pos & 0xFF;
+	buffer[5] = angle >> 8;
+	buffer[6] = angle & 0xFF;
+	buffer[7] = direction;
+
+	while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
+		_delay_ms(50);
+
+	return odometry_wait_until_done(callback);
+}
 uint8_t getState(void)
 {
 	return position.state;

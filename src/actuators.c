@@ -84,7 +84,8 @@ void klip_servo(int8_t angle)
  */
 void actuator_setup(void)
 {
-
+	klip(OFF);
+	pumps(OFF);
 }
 
 /*
@@ -149,7 +150,6 @@ void mosfet(unsigned char side, unsigned char state)
 	while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 		_delay_ms(50);
 }
-
 /*
  *	Function: 		void pumps(unsigned char state)
  *	Parameters: 	unsigned char state	- ON or OFF state
@@ -157,13 +157,17 @@ void mosfet(unsigned char side, unsigned char state)
  */
 void pumps(unsigned char state)
 {
-	if(!state) 	// !state because the relay turns ON when pulled to GND
+
+	//2 -> PA0
+	//3 -> PA1
+	//1 -> PA2
+
+	if(!state)
 	{
-		gpio_write_pin(RELAY_1_PIN, TRUE);
-		gpio_write_pin(RELAY_2_PIN, TRUE);
+		PORTA |= (1 << PA2) | (1 << PA0);
 	} else {
-		gpio_write_pin(RELAY_1_PIN, FALSE);
-		gpio_write_pin(RELAY_2_PIN, FALSE);
+
+		PORTA &= ~(1 << PA2) &  ~(1 << PA0);
 	}
 }
 
@@ -174,11 +178,16 @@ void pumps(unsigned char state)
  */
 void klip(unsigned char state)
 {
+
+	//2 -> PA0
+	//3 -> PA1
+	//1 -> PA2
+
 	if(!state)	// !state because the relay turns ON when pulled to GND
 	{
-		gpio_write_pin(RELAY_3_PIN, TRUE);
+		PORTA |= (1 << PA1);
 	} else {
-		gpio_write_pin(RELAY_3_PIN, FALSE);
+		PORTA &= ~(1 << PA1);
 	}
 }
 
@@ -189,11 +198,11 @@ void klip(unsigned char state)
 static void trig_pulse()
 {
 	dist_trig_off()				// Clear pin before setting it high
-	_delay_us(1);					// Clear to zero and give time for electronics to set
+	_delay_us(1);				// Clear to zero and give time for electronics to set
 	dist_trig_on()				// Set pin high
-	_delay_us(12);					// Send high pulse for minimum 10us
+	_delay_us(12);				// Send high pulse for minimum 10us
 	dist_trig_off()				// Clear pin
-	_delay_us(1);					// Delay not required, but just in case...
+	_delay_us(1);				// Delay not required, but just in case...
 }
 
 /*
