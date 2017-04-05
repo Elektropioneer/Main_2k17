@@ -28,6 +28,7 @@ uint8_t gpio_register_pin(uint8_t pin, uint8_t direction, bool pulled_up)
 
 	uint8_t port	= 1 + pin / 8;
 	uint8_t pin_reg = pin % 8;
+
 	if(direction == GPIO_DIRECTION_OUTPUT)
 	{
 		*(volatile uint8_t*)(0x21 + 3 *  (port - 1)) |= (1 << pin_reg);
@@ -39,7 +40,9 @@ uint8_t gpio_register_pin(uint8_t pin, uint8_t direction, bool pulled_up)
 		*(volatile uint8_t*)(0x21 + 3 *  (port - 1)) &= ~(1 << pin_reg);
 		*(volatile uint8_t*)(0x22 + 3 *  (port - 1)) |= (1 << pin_reg);
 	}
-    input = (struct gpio_input*)malloc(sizeof(struct gpio_input));
+
+	input = (struct gpio_input*)malloc(sizeof(struct gpio_input));
+
     if(input == NULL)
         return 1;
 

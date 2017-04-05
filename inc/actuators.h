@@ -1,24 +1,28 @@
 #ifndef ACTUATORS_H_
 #define ACTUATORS_H_
 
-#define DETECTED		1
-#define NOT_DETECTED	0
+#define DETECTED			1
+#define NOT_DETECTED		0
 
-#define DOWN			0
-#define UP				1
-#define MID				2
+#define DOWN				0
+#define UP					1
+#define MID					2
 
-#define LEFT			1
-#define RIGHT			0
+#define LEFT				1
+#define RIGHT				0
 
-#define FIRST			1
-#define SECOND			2
+#define FIRST				1
+#define SECOND				2
 
-#define ON				1
-#define OFF 			0
+#define ON					1
+#define OFF 				0
 
-#define CW				0
-#define CCW				1
+#define CW					0
+#define CCW					1
+
+#define klip_servo_right	70
+#define klip_servo_center	-15
+#define klip_servo_left		-90
 
 ////////////////////////// distance sensor stuff //////////////////////////
 

@@ -23,9 +23,10 @@
 // SIDE TACTIC
 const struct goto_fields yellow_tactic_side_positions[TACTIC_SIDE_POSITION_COUNT] =
 {
-	{{900,896},60,BACKWARD,NULL}/*,
-	{{1330,500},60,FORWARD,NULL}*/
-
+		//950+282
+	{{1050,896},60,BACKWARD,NULL},
+	{{1250,596},60,FORWARD,NULL},
+	{{1300,256},60,FORWARD,NULL}
 
 };
 
@@ -52,7 +53,7 @@ void yellowside(void)
 
 	starting_position.x			= 282; // mm
 	starting_position.y			= 896; // mm
-	starting_position.angle 	= -75;
+	starting_position.angle 	= -180;
 
 	odometry_set_position(&starting_position);
 
@@ -63,9 +64,7 @@ void yellowside(void)
 			case ROBOT_STATE_TACTIC_SIDE:
 				for(current_position = next_position;current_position < TACTIC_SIDE_POSITION_COUNT; current_position++)
 				{
-					odometry_status = odometry_move_to_position(&(yellow_tactic_side_positions[current_position].point), yellow_tactic_side_positions[current_position].speed,
-					yellow_tactic_side_positions[current_position].direction,yellow_tactic_side_positions[current_position].callback);
-
+					odometry_status = odometry_move_to_position(&yellow_tactic_side_positions[current_position].point, yellow_tactic_side_positions[current_position].speed,yellow_tactic_side_positions[current_position].direction, yellow_tactic_side_positions[current_position].callback);
 					if(odometry_status == ODOMETRY_FAIL)
 					{
 						break;

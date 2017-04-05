@@ -1,7 +1,7 @@
 #ifndef SIDES_H_
 #define SIDES_H_
 
-#define TACTIC_SIDE_POSITION_COUNT 		1
+#define TACTIC_SIDE_POSITION_COUNT 		3
 #define TACTIC_CENTER_POSITION_COUNT 	1
 
 struct goto_fields

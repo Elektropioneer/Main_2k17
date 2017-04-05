@@ -29,8 +29,8 @@
 #define ON						1
 #define OFF						0
 
-#define JUMPER_PIN				40		//portf 0
-#define SIDE_PIN				41		//portf 1
+#define JUMPER_PIN				40		//portf 0 // working
+#define SIDE_PIN				41		//portf 1 //
 #define TACTIC_PIN				42		//portf 2
 #define VALJAK_PIN				43		//portf 3
 
@@ -57,6 +57,7 @@ signed char sides_switch_check(void);
 
 //Checking the tactic switch function
 signed char tactic_switch_check(void);
+signed char klip_switch_check(void);
 
 //Initing the system functions
 void system_init(void);

@@ -21,11 +21,33 @@
 */
 int main()
 {
-
 	system_init();
 	_delay_ms(100);
-
-	//yellowside();
-
-
+	yellowside();
+	/*while(1)
+	{
+		if(!klip_switch_check())
+			{
+				//activated
+			}
+			else
+			{
+				//off
+			}
+	}*/
+	/*if(sides_switch_check())
+	{
+		//blue
+	}
+	else
+	{
+		//yellow
+	}*/
+	/*	if(tactic_switch_check())
+			//mosfet
+			leds(ON);
+		else
+			leds(OFF);
+		_delay_ms(200);
+	*/
 }

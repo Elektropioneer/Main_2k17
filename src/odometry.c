@@ -32,7 +32,7 @@ void odometry_set_speed(uint8_t speed)
 	current_speed = speed;
 }
 
-static void odometry_query_position(void)
+void odometry_query_position(void)
 {
 	uint8_t buffer[8];
 	buffer[0] = 'P';
@@ -102,8 +102,8 @@ uint8_t odometry_move_to_position(struct odometry_position* position, uint8_t sp
 	buffer[2] = position->x & 0xFF;
 	buffer[3] = position->y >> 8;
 	buffer[4] = position->y & 0xFF;
-	buffer[5] = 0;//Mozda ne treba 0
-	buffer[6] = direction;
+	buffer[5] = 0;//Mozda ne treba 0 WOW... u stvari, to fw/bw radi, jel da? da radi. onda zajebi
+	buffer[6] = direction; // kako ide komplement dvojke, -1 je 0xFF, jel da jeste
 	while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
 		_delay_ms(50);
 
@@ -119,10 +119,10 @@ void odometry_set_position(struct odometry_position* new_position)
 	buffer[2] = new_position->x & 0xFF;
 	buffer[3] = new_position->y >> 8;
 	buffer[4] = new_position->y & 0xFF;
-	buffer[5] = new_position->angle << 8;
-	buffer[6] = new_position->angle & 0xFF;
+	buffer[5] = new_position->angle >> 8; //to sam probao bio, i samo uradi na drugu stranu, tako je bilo prosle godine. treba ovako, ok da probam? jok, cek
+	buffer[6] = new_position->angle & 0xFF; // cek sekund k. ne znam, aj probaj ovako sada... isto
 
-	position.x	   = new_position->x;
+	position.x	   = new_position->x; // gde je digitron
 	position.y	   = new_position->y;
 	position.angle = new_position->angle;
 
@@ -161,12 +161,11 @@ uint8_t odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(ui
 	return odometry_wait_until_done(callback);
 }
 
-uint8_t odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t direction, uint8_t (*callback)(uint32_t start_time))
+uint8_t odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t direction, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
 {
 	uint8_t buffer[8];
 
-	// this is not sure
-	odometry_set_speed(70);
+	odometry_set_speed(speed);
 
 	buffer[0] = 'Q';
 	buffer[1] = x_pos >> 8;

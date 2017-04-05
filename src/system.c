@@ -93,6 +93,20 @@ signed char tactic_switch_check(void)
 }
 
 /*
+ *	Function: 		signed char klip_switch_check(void)
+ *	Parameters: 	void
+ *	Description:	reading klip switch
+ */
+signed char klip_switch_check(void)
+{
+	if(gpio_read_pin(VALJAK_PIN) == 1)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+/*
  *	Function: 		void system_reset_system_time(void)
  *	Parameters: 	void
  *	Description:	reset system time
@@ -159,7 +173,6 @@ void leds(unsigned char state)
  */
 void system_init(void)
 {	
-
 	// sets debouncer
 	timer_register_callback(gpio_debouncer);
 	
@@ -193,8 +206,8 @@ void system_init(void)
 	actuator_setup();
 
 	// waiting for the jumper
-	/*while(!(gpio_read_pin(JUMPER_PIN)));
-		_delay_ms(10);*/
+	while(!(gpio_read_pin(JUMPER_PIN)));
+		_delay_ms(10);
 		
 	// indicating the led
 	leds(OFF);

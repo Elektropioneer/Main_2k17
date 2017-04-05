@@ -162,7 +162,7 @@ void pumps(unsigned char state)
 	//3 -> PA1
 	//1 -> PA2
 
-	if(!state)
+	if(!state)					// !state because the relay turns ON when pulled to GND
 	{
 		PORTA |= (1 << PA2) | (1 << PA0);
 	} else {
@@ -183,7 +183,7 @@ void klip(unsigned char state)
 	//3 -> PA1
 	//1 -> PA2
 
-	if(!state)	// !state because the relay turns ON when pulled to GND
+	if(!state)					// !state because the relay turns ON when pulled to GND
 	{
 		PORTA |= (1 << PA1);
 	} else {
